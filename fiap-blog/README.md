@@ -1,8 +1,18 @@
-# React + Vite
+# Blog-FIAP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Objetivo
+Blog criado utilizando React para o Front-End e a ferramenta Contentful para simular o Back-End.
+Conteudo visto na aula de Front-End Engineering and UX do Professor Jaison Schmidt.
+Na qual vimos alguns conceitos de React e aplicamos na prática nesse projeto.
 
-Currently, two official plugins are available:
+## Como rodar localmente
+`` npm run dev``
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Como buildar o projeto
+``npm run build``
+
+## Link do projeto
+https://65d68f51b1e8ef2708808dd5--calm-brioche-58d218.netlify.app/
+
+## Autores
+Amon Silva e Bruno Dantas.
