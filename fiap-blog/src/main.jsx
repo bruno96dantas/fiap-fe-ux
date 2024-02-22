@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Home } from './pages/Home';
 import { Post } from './pages/Post';
+import { Posts } from './pages/Posts';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -21,6 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
         <Route path="/post/:slug">
           <Post />
+        </Route>
+        <Route path="/posts">
+          <Posts />
         </Route>
         <Route path="*">
           <Home />

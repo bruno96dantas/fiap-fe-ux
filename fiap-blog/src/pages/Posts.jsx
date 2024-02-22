@@ -2,41 +2,48 @@ import { useEffect, useState } from "react"
 import { Layout } from "../components/Layout"
 import { client } from "../lib/createClient";
 import { Link } from "react-router-dom";
+import { Pagination } from "../components/Pagination";
 
-export const Home = () => {
-    const [categories, setCategories] = useState([]); // retorna um array
+export const Posts = () => {
     const [posts, setPosts] = useState([]);
-
-    // ciclo de vida de componentes
-    // posso escrever JavaScript
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const limitPerPage = 3;
+    
     useEffect(() => {
-        // Pedir para o objeto client buscar os últimos 5 posts
         client
             .getEntries({
                 content_type: 'blogPost',
-                limit: 2,
+                limit: limitPerPage,
                 order: "sys.createdAt"
             })
             .then(function (entries) {
-                console.log('posts', entries.items);
+                console.log('posts', entries);
                 setPosts(entries.items);
+                setTotalPages(entries.total)
             });
-
-        // Pedir para o objeto client buscar todas as categorias
+    }, []);
+    useEffect(() => {
         client
             .getEntries({
-                content_type: 'blogCategory',
+                content_type: 'blogPost',
+                skip: (currentPage * limitPerPage) - limitPerPage,
+                limit: limitPerPage,
+                order: "sys.createdAt"
             })
             .then(function (entries) {
-                console.log('categorias', entries.items);
-                setCategories(entries.items);
+                setPosts(entries.items);
             });
-    }, []); // array vazio indica o onload do componente
-
+    }, [currentPage]);
     return (
         <Layout>
             <div className="container">
                 <div className="row">
+                    <div className="mt-1">
+                        <Link to="/" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            &lt;- Voltar para Home
+                        </Link>
+                    </div>
                     <main className="col-md-8">
                         <h1 className="my-3">Últimos posts</h1>
 
@@ -51,22 +58,10 @@ export const Home = () => {
                                 </div>
                             </div>
                         ))}
-                        <Link to={`/posts/`} className="btn btn-primary">
-                            Ver todos os posts
-                        </Link>
-                    
+
+                        <Pagination currentPage={currentPage} totalPages={totalPages/limitPerPage} onPageChange={setCurrentPage}/>
+                        
                     </main>
-                
-                    <aside className="col-md-4">
-                        <h2>Categorias</h2>
-                        <ul>
-                            {categories.map(category => (
-                                <li key={category.sys.id}>
-                                    {category.fields.categoryTitle}
-                                </li>
-                            ))}
-                        </ul>
-                    </aside>
                 </div>
             </div>
         </Layout>
